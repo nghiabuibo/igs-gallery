@@ -1,0 +1,73 @@
+.members {
+    max-height: 250px;
+    overflow: auto;
+    padding: 1rem;
+    border-radius: 0.65rem;
+    background-color: rgb(0 0 0 / 0.3);
+    backdrop-filter: blur(5px);
+}
+
+/* width */
+.members::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.members::-webkit-scrollbar-track {
+    background: #f1f1f134;
+    border-radius: 0.65rem;
+}
+
+/* Handle */
+.members::-webkit-scrollbar-thumb {
+    background: #89e91b;
+    border-radius: 0.65rem;
+}
+
+/* Handle on hover */
+.members::-webkit-scrollbar-thumb:hover {
+    background: #5ca508;
+}
+
+.fileInput {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    width: 100%;
+}
+
+.fileLabel {
+    background-color: #9AFF24;
+    color: #320386;
+    border-radius: 0.65rem;
+    white-space: pre;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.uploadSelectIcon {
+    width: 30px;
+}
+
+.uploadStartIcon  {
+    width: 100%;
+}
+
+.uploadSubmit {
+    --size: 70px;
+    background: none;
+    border: none;
+    outline: none;
+    width: var(--size);
+    height: var(--size);
+    background-color: #9AFF24;
+    padding: 20px;
+}
+
+.progress {
+    --bs-progress-bar-bg: #589c0b;
+}

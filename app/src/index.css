@@ -1,0 +1,7 @@
+#root {
+    background-image: url(./assets/image/bg.jpg);
+    background-size: cover;
+    background-position: top center;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+}

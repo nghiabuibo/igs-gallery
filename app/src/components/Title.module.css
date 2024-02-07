@@ -1,0 +1,33 @@
+.title {
+    border-radius: 0.65rem;
+    border: none;
+    outline: none;
+}
+
+.title.dark {
+    background: rgb(165, 91, 227);
+    background: linear-gradient(135deg, rgba(165, 91, 227, 0.7) 0%, rgba(90, 13, 157, 0.7) 100%);
+    color: #fff
+}
+
+.title.light {
+    background: rgb(248, 248, 248);
+    background: linear-gradient(135deg, rgba(243, 243, 243, 0.9) 0%, rgba(255, 255, 255, 0.9) 100%);
+    color: #320386
+}
+
+.title.xs {
+    font-size: 0.8rem;
+}
+
+.title.sm {
+    font-size: 1rem;
+}
+
+.title.md {
+    font-size: 1.5rem;
+}
+
+.title.lg {
+    font-size: 2rem;
+}

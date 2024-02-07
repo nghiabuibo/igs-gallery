@@ -1,0 +1,81 @@
+.wrapper {
+    background: rgb(165, 91, 227);
+    background: linear-gradient(135deg, rgba(165, 91, 227, 0.7) 0%, rgba(90, 13, 157, 0.7) 100%);
+    border-radius: 0.65rem;
+    border: none;
+    outline: none;
+}
+
+.label {
+    font-weight: 500;
+    white-space: pre;
+}
+
+.input {
+    background: rgb(194, 112, 241);
+    background: radial-gradient(circle, rgba(194, 112, 241, 0.6) 0%, rgba(180, 74, 240, 0.6) 100%);
+    border: none;
+    border-radius: 0.65rem;
+    outline: none;
+    width: 100%;
+}
+
+.register .input {
+    height: 2.3rem;
+}
+
+.textarea {
+    background: rgb(194, 112, 241);
+    background: radial-gradient(circle, rgba(194, 112, 241, 0.6) 0%, rgba(180, 74, 240, 0.6) 100%);
+    border: none;
+    border-radius: 0.65rem;
+    outline: none;
+    width: 100%;
+}
+
+/* width */
+.textarea::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.textarea::-webkit-scrollbar-track {
+    background: #f1f1f134;
+    border-radius: 0.65rem;
+}
+
+/* Handle */
+.textarea::-webkit-scrollbar-thumb {
+    background: #89e91b;
+    border-radius: 0.65rem;
+}
+
+/* Handle on hover */
+.textarea::-webkit-scrollbar-thumb:hover {
+    background: #5ca508;
+}
+
+.input option {
+    background: rgb(194, 112, 241);
+}
+
+.selected {
+    background: rgb(214, 146, 253);
+    background: radial-gradient(circle, rgba(214, 146, 253, 0.6) 0%, rgba(191, 100, 243, 0.6) 100%);
+}
+
+.entryDelete {
+    background-color: rgb(0 0 0 / 0.1);
+    width: 30px;
+    height: 30px;
+    border-radius: 0.65rem;
+}
+
+.selected .entryDelete {
+    background-color: rgb(0 0 0 / 0.2);
+}
+
+.submitBtn {
+    background: #fff;
+    color: #320386;
+}

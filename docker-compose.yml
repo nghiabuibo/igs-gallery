@@ -1,0 +1,13 @@
+version: "3"
+services:
+  database:
+    image: mysql:8.0.35
+    command: --default-authentication-plugin=mysql_native_password
+    env_file:
+      - ./database/.env
+    volumes:
+      - ./database/mysql:/var/lib/mysql
+      - ./database/conf.d:/etc/mysql/conf.d
+    ports:
+      - 3308:3306
+    restart: always

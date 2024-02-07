@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "submissions",
+  "info": {
+    "singularName": "submission",
+    "pluralName": "submissions",
+    "displayName": "Submission",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "code": {
+      "pluginOptions": {},
+      "type": "uid"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "submission"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "review",
+        "active",
+        "final"
+      ]
+    },
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "description": {
+      "type": "text"
+    },
+    "votes": {
+      "type": "json"
+    },
+    "finalRoundVotes": {
+      "type": "json"
+    }
+  }
+}

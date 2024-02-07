@@ -1,0 +1,62 @@
+.subtitle {
+    font-size: 1.1rem;
+}
+.bgLine {
+    position: relative;
+}
+.bgLine::before {
+    position: absolute;
+    content: '';
+    height: 10px;
+    width: 100%;
+    left: 0;
+    top: 2px;
+    background-image: url(../assets/image/line.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #9AFF24;
+    position: relative;
+}
+
+.unStyle {
+    list-style-type: none;
+}
+
+ul.customBullet li,
+div.customBullet {
+    position: relative;
+}
+
+ul.customBullet li::before,
+div.customBullet::before {
+    --size: 6px;
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 9px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: #9AFF24;
+}
+
+.timelineList li {
+    margin-bottom: 8px;
+}
+
+@media (max-width: 991px) {
+    .bgLine::before {
+        background-image: url(../assets/image/line-vertical.png);
+        top: 0;
+        left: 3.5%;
+        width: 10px;
+        height: 100%;
+    }
+}

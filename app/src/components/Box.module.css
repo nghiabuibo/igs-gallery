@@ -1,0 +1,14 @@
+.box {
+    background: rgb(91, 0, 212);
+    background: linear-gradient(220deg, rgba(91, 0, 212, 0.6) 0%, rgba(50, 3, 134, 1) 100%);
+    padding: 2rem;
+    border-radius: 1.8rem;
+}
+
+.box.square {
+    border-radius: 0;
+}
+
+.box.small {
+    padding: 1rem;
+}

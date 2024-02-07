@@ -1,0 +1,78 @@
+.prizeImg {
+    width: 120%;
+    z-index: 2;
+}
+
+.prizeList {
+    list-style-type: none;
+}
+
+.prizeList li {
+    position: relative;
+    margin-bottom: 3px;
+}
+
+.prizeList li::before {
+    --size: 13px;
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 6px;
+    width: var(--size);
+    height: var(--size);
+    background-image: url(../assets/svg/check-icon-dark.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.box {
+    color: #320386;
+    border-radius: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.box.first::after {
+    --size: 70px;
+    content: '';
+    position: absolute;
+    top: -25px;
+    right: -20px;
+    width: var(--size);
+    height: var(--size);
+    background-image: url(../assets/svg/prize-star.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.box.first {
+    background: rgb(255, 231, 168);
+    background: linear-gradient(30deg, rgba(255, 231, 168, 1) 0%, rgba(255, 250, 211, 1) 42%);
+}
+
+.box.second {
+    background: rgb(241, 241, 241);
+    background: linear-gradient(30deg, rgb(224, 224, 224) 0%, rgb(255, 255, 255) 42%);
+}
+
+.box.third {
+    background: rgb(255, 231, 168);
+    background: linear-gradient(30deg, rgb(247, 195, 152) 0%, rgb(255, 234, 211) 42%);
+}
+
+@media (max-width: 1199px) {
+    .prizeImg {
+        width: 140%;
+    }
+}
+
+@media (max-width: 991px) {
+    .prizeImg {
+        width: 80%;
+    }
+
+    .box.first::after {
+        --size: 50px;
+        right: 10px;
+    }
+}

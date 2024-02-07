@@ -1,0 +1,32 @@
+.featureList {
+    font-size: 1.2rem;
+}
+.featureList li {
+    position: relative;
+}
+.featureList li::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 8px;
+    width: 15px;
+    height: 15px;
+    background-image: url(../assets/svg/check-icon.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.unStyle {
+    list-style-type: none;
+}
+
+.groupName {
+    color: #9AFF24;
+    font-weight: 700;
+}
+
+.time {
+    font-family: 'Zen Dots', sans-serif;
+    font-size: 2.3rem;
+    text-shadow: 0 0 10px #34109f;
+}
