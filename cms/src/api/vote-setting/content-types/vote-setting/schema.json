@@ -31,10 +31,6 @@
     "finalRound": {
       "type": "boolean",
       "default": false
-    },
-    "registerEmail": {
-      "type": "boolean",
-      "default": false
     }
   }
 }

@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "register_settings",
+  "info": {
+    "singularName": "register-setting",
+    "pluralName": "register-settings",
+    "displayName": "Register Settings"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "startTime": {
+      "type": "datetime"
+    },
+    "endTime": {
+      "type": "datetime"
+    },
+    "registerEmail": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

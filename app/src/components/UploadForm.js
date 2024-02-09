@@ -12,7 +12,7 @@ import uploadStartIcon from "../assets/svg/upload-start-icon.svg"
 import { toast } from "react-toastify"
 import { useParams } from "react-router-dom"
 
-import VideoPreview from "./VideoPreview"
+import FilePreview from "./FilePreview"
 
 function Progress(props) {
     const { progress } = props
@@ -40,6 +40,22 @@ function UploadForm(props) {
     const [file, setFile] = useState(null)
     const [description, setDescription] = useState('')
     const [progress, setProgress] = useState(0)
+    const allowFileTypes = [
+        'video/mov',
+        'video/quicktime',
+        'video/mp4',
+        'image/png',
+        'image/jpeg',
+        'image/heif',
+        'audio/mpeg',
+        'audio/wav',
+        'audio/x-m4a',
+        'application/pdf',
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'application/vnd.openxmlformats-officedocument.presentationml.template',
+        'application/vnd.openxmlformats-officedocument.presentationml.slideshow'
+    ]
 
     const handleChange = (e) => {
         setDescription(e.target.value)
@@ -94,12 +110,10 @@ function UploadForm(props) {
 
         const { type, size } = fileInput
 
-        const allowFileTypes = ['video/mov', 'video/quicktime', 'video/mp4']
-
         // validate file type
         if (!allowFileTypes.includes(type)) {
             toast.error('File type is not allowed!', { theme: 'colored' })
-            return
+            // return
         }
 
         // validate file size
@@ -126,7 +140,7 @@ function UploadForm(props) {
         formData.append('description', description)
         formData.append('ref', 'api::submission.submission')
         formData.append('refId', submission.id)
-        formData.append('field', 'video')
+        formData.append('field', 'media')
         formData.append('files', file)
 
         const headers = {
@@ -165,7 +179,7 @@ function UploadForm(props) {
             }
 
             {
-                (token && submission.id && !submission.video && progress <= 0) &&
+                (token && submission.id && !submission.media && progress <= 0) &&
                 <form onSubmit={handleSubmit} className="text-center">
                     <div><strong><span className={stylesUpload.green}>Short description</span> of your performance</strong></div>
                     <div className="mb-3">(At least 10 words)</div>
@@ -177,11 +191,11 @@ function UploadForm(props) {
                             <img src={uploadSelectIcon} className={styles.uploadSelectIcon} alt="Upload Select" />
                         </label>
                     </div>
-                    <input type="file" className={styles.fileInput} id="upload_file_input" onChange={handleFileInput} accept="video/mp4,video/quicktime,video/mov" required={true} />
+                    <input type="file" className={styles.fileInput} id="upload_file_input" onChange={handleFileInput} accept={allowFileTypes.join(',')} required={true} />
                     {
                         file &&
                         <>
-                            <VideoPreview file={file} />
+                            <FilePreview file={file} />
                             <button type="submit" className={`rounded-circle d-flex align-items-center justify-content-center m-auto mt-3 ${styles.uploadSubmit}`}>
                                 <img src={uploadStartIcon} className={styles.uploadStartIcon} alt="Upload Start" />
                             </button>
@@ -196,10 +210,10 @@ function UploadForm(props) {
             }
 
             {
-                (token && submission.id && submission.video) &&
+                (token && submission.id && submission.media) &&
                 <div className="text-center">
                     <div className="mb-3"><strong>You have already uploaded your performance</strong></div>
-                    <VideoPreview src={submission.video.url} />
+                    <FilePreview media={submission.media} />
                 </div>
             }
         </div>

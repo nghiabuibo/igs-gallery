@@ -362,6 +362,38 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiRegisterSettingRegisterSetting extends Schema.SingleType {
+  collectionName: 'register_settings';
+  info: {
+    singularName: 'register-setting';
+    pluralName: 'register-settings';
+    displayName: 'Register Settings';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    startTime: Attribute.DateTime;
+    endTime: Attribute.DateTime;
+    registerEmail: Attribute.Boolean & Attribute.DefaultTo<false>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::register-setting.register-setting',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::register-setting.register-setting',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiSubmissionSubmission extends Schema.CollectionType {
   collectionName: 'submissions';
   info: {
@@ -381,7 +413,7 @@ export interface ApiSubmissionSubmission extends Schema.CollectionType {
       'plugin::users-permissions.user'
     >;
     status: Attribute.Enumeration<['pending', 'review', 'active', 'final']>;
-    video: Attribute.Media;
+    media: Attribute.Media;
     description: Attribute.Text;
     votes: Attribute.JSON;
     finalRoundVotes: Attribute.JSON;
@@ -421,7 +453,6 @@ export interface ApiVoteSettingVoteSetting extends Schema.SingleType {
     description: Attribute.String;
     cta: Attribute.String;
     finalRound: Attribute.Boolean & Attribute.DefaultTo<false>;
-    registerEmail: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -853,17 +884,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     grade: Attribute.Enumeration<
       [
         'N/A',
-        'Kh\u1ED1i K',
-        'Kh\u1ED1i 1',
-        'Kh\u1ED1i 2',
-        'Kh\u1ED1i 3',
-        'Kh\u1ED1i 4',
-        'Kh\u1ED1i 5',
-        'Kh\u1ED1i 6',
-        'Kh\u1ED1i 7',
-        'Kh\u1ED1i 8',
-        'Kh\u1ED1i 9',
-        'Kh\u1ED1i 10'
+        'Grade K',
+        'Grade 1',
+        'Grade 2',
+        'Grade 3',
+        'Grade 4',
+        'Grade 5',
+        'Grade 6',
+        'Grade 7',
+        'Grade 8',
+        'High School'
       ]
     >;
     igsStudent: Attribute.Boolean;
@@ -894,6 +924,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::register-setting.register-setting': ApiRegisterSettingRegisterSetting;
       'api::submission.submission': ApiSubmissionSubmission;
       'api::vote-setting.vote-setting': ApiVoteSettingVoteSetting;
       'plugin::upload.file': PluginUploadFile;

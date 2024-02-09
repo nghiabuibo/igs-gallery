@@ -12,7 +12,7 @@ export default async ({ strapi }, socket) => {
                 $in: statusFilter
             }
         },
-        populate: ['video', 'users']
+        populate: ['media', 'users']
     })
     socket.emit('submission:load', submissions)
 }

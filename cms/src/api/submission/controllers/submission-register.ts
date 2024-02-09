@@ -39,7 +39,7 @@ export default async (ctx) => {
     };
     
     // get sending email config
-    const voteSettings = await strapi.entityService.findMany('api::vote-setting.vote-setting')
+    const registerSettings = await strapi.entityService.findMany('api::register-setting.register-setting')
 
     // create new users
     const defaultRoleID = await getRoleIDByName('authenticated')
@@ -57,8 +57,7 @@ export default async (ctx) => {
       if (!user || !user.id) return ctx.badRequest(`Đăng ký không thành công tại thành viên ${i + 1}!`)
 
       // send email
-      console.log(voteSettings)
-      if (!voteSettings?.registerEmail) continue
+      if (!registerSettings?.registerEmail) continue
 
       try {
         strapi.plugins['email'].services.email.sendTemplatedEmail(
@@ -77,9 +76,12 @@ export default async (ctx) => {
 
     }
 
+    const message = ['Đăng ký thành công!']
+    if (registerSettings?.registerEmail) message.push('Vui lòng kiểm tra email đã đăng ký để nhận mã dự thi.')
+
     return ctx.send({
       // code: submissionCode,
-      message: 'Đăng ký thành công! Vui lòng kiểm tra email đã đăng ký để nhận mã dự thi.'
+      message: message.join(' ')
     })
   } catch (err) {
     ctx.body = err;

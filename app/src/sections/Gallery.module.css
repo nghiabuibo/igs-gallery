@@ -66,7 +66,7 @@
     color: #fff;
     border-radius: 1.5rem;
     padding: 0.3rem 2.5rem 0.3rem 0.75rem;
-    width: 90px;
+    width: 150px;
     transition: width ease 0.3s;
 }
 
@@ -74,7 +74,7 @@
     width: 200px;
 }
 
-.videoWrapper {
+.fileWrapper {
     background-image: url(../assets/image/video-bg.png);
     background-size: 100%;
     background-repeat: no-repeat;
@@ -82,15 +82,15 @@
     padding: 10.2%;
 }
 
-.videoWrapper.kids {
+.fileWrapper.kids {
     background-image: url(../assets/image/video-bg-kids.png);
 }
 
-.videoWrapper.junior {
+.fileWrapper.junior {
     background-image: url(../assets/image/video-bg-junior.png);
 }
 
-.videoWrapper.senior {
+.fileWrapper.senior {
     background-image: url(../assets/image/video-bg-senior.png);
 }
 

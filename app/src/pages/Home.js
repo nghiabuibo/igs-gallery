@@ -28,7 +28,7 @@ function Home() {
         if (!res) return
         if (res.status < 200 && res.status >= 300) return
 
-        const message = res?.data?.message ?? 'Đăng ký thành công! Vui lòng kiểm tra email đã đăng ký để nhận mã dự thi.'
+        const message = res?.data?.message ?? 'Đăng ký thành công!'
         toast.success(message, { theme: 'colored' })
     }
 

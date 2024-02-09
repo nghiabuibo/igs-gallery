@@ -15,7 +15,7 @@ export default factories.createCoreService('api::submission.submission', ({ stra
             filters: {
                 code
             },
-            populate: ['users', 'video']
+            populate: ['users', 'media']
         })
 
         return submission

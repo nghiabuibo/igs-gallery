@@ -90,17 +90,16 @@
       "type": "enumeration",
       "enum": [
         "N/A",
-        "Khối K",
-        "Khối 1",
-        "Khối 2",
-        "Khối 3",
-        "Khối 4",
-        "Khối 5",
-        "Khối 6",
-        "Khối 7",
-        "Khối 8",
-        "Khối 9",
-        "Khối 10"
+        "Grade K",
+        "Grade 1",
+        "Grade 2",
+        "Grade 3",
+        "Grade 4",
+        "Grade 5",
+        "Grade 6",
+        "Grade 7",
+        "Grade 8",
+        "High School"
       ]
     },
     "igsStudent": {

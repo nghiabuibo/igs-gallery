@@ -6,10 +6,19 @@ const { ApplicationError } = errors;
 import isValidEmail from '../../../utils/isValidEmail'
 
 export default async (ctx, config, { strapi }) => {
+    // validate register time
+    const registerSettings = await strapi.entityService.findMany('api::register-setting.register-setting')
+    const currentTimestamp = Date.now()
+    const startTimestamp = new Date(registerSettings.startTime).getTime()
+    const endTimestamp = new Date(registerSettings.endTime).getTime()
+
+    if (currentTimestamp < startTimestamp) throw new ApplicationError('Không thể đăng ký tại thời điểm này!')
+    if (endTimestamp && currentTimestamp > endTimestamp) throw new ApplicationError('Không thể đăng ký tại thời điểm này!')
+    
+    // validate entries
     const entries = ctx.request.body
     if (!entries.length) throw new ApplicationError('Không có thông tin thành viên!')
 
-    // validate entries
     for (let i in entries) {
         const entry = entries[i]
 

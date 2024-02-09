@@ -7,15 +7,15 @@ export default async (ctx, config, { strapi }) => {
     // validate submission
     const { refId: submissionID } = ctx.request.body
     const submission = await strapi.entityService.findOne('api::submission.submission', submissionID, {
-        populate: ['video']
+        populate: ['media']
     })
-    if (submission.video) throw new ApplicationError('Video already uploaded!')
+    if (submission.video) throw new ApplicationError('File already uploaded!')
 
     // validate file
     const allowFileTypes = ['video/mov', 'video/quicktime', 'video/mp4']
     const { type } = ctx.request.files.files
 
-    if (!allowFileTypes.includes(type)) throw new ApplicationError('File type is not allowed!')
+    // if (!allowFileTypes.includes(type)) throw new ApplicationError('File type is not allowed!')
 
     return true
 }

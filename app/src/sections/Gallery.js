@@ -4,7 +4,7 @@ import socket from "../utils/Socket"
 import { GoogleLogin } from '@react-oauth/google';
 import { toast } from "react-toastify";
 
-import VideoPreview from "../components/VideoPreview";
+import FilePreview from "../components/FilePreview";
 
 import styles from "./Gallery.module.css"
 
@@ -22,9 +22,11 @@ function Gallery(props) {
     const [credential, setCredential] = useState('')
     const [userEmail, setUserEmail] = useState('')
     const [submissions, setSubmissions] = useState([])
-    const [filter, setFilter] = useState('all')
     const [search, setSearch] = useState('')
     const [searchFocus, setSearchFocus] = useState(false)
+    const [selectedGroup, setSelectedGroup] = useState('All')
+    const [gradeFilters, setGradeFilters] = useState([])
+    const [selectedGrades, setSelectedGrades] = useState(['Grade K', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'High School'])
 
     const [params] = useSearchParams()
 
@@ -162,57 +164,67 @@ function Gallery(props) {
         toast.success('URL copied!', { theme: 'colored' })
     }
 
-    const renderFilters = ['all', 'kids', 'junior', 'senior'].map(filterValue => {
+    const handleGroupFilterClick = (filter) => {
+        setSelectedGroup(filter.label)
+        setGradeFilters(filter.gradeFilters)
+        setSelectedGrades(filter.selectedGrades)
+    }
+
+    const renderGroupFilters = [
+        {
+            label: 'All',
+            gradeFilters: [],
+            selectedGrades: ['Grade K', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'High School']
+        },
+        {
+            label: 'Elementary School',
+            gradeFilters: ['Grade K', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5'],
+            selectedGrades: ['Grade K', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5']
+        },
+        {
+            label: 'Middle School',
+            gradeFilters: ['Grade 6', 'Grade 7', 'Grade 8'],
+            selectedGrades: ['Grade 6', 'Grade 7', 'Grade 8']
+        },
+        {
+            label: 'High School',
+            gradeFilters: [],
+            selectedGrades: ['High School']
+        },
+    ].map(filter => {
         return (
-            <button key={filterValue} className={`text-capitalize ${styles.filterBtn} ${styles[filterValue]} ${filter === filterValue ? styles.selected : ''}`} onClick={() => setFilter(filterValue)}>{filterValue}</button>
+            <button
+                key={filter.label}
+                className={`${styles.filterBtn} ${selectedGroup === filter.label ? styles.selected : ''}`}
+                onClick={() => handleGroupFilterClick(filter)}
+            >
+                {filter.label}
+            </button>
+        )
+    })
+
+    const renderGradeFilters = gradeFilters.map(filter => {
+        return (
+            <button
+                key={filter}
+                className={`${styles.filterBtn} ${selectedGrades.length === 1 && selectedGrades[0] === filter ? styles.selected : ''}`}
+                onClick={() => setSelectedGrades([filter])}
+            >
+                {filter}
+            </button>
         )
     })
 
     const renderSubmissions = submissions.map(submission => {
         if (!submission.users || !submission.users.length) return false
 
-        // get users highest grade
-        const usersMap = submission.users?.map(user => {
-            const gradeStr = user.grade.replace('N/A', '-1').replace('Khối K', '0').replace('Khối ', '')
-            return {
-                name: user.name,
-                school: user.school,
-                gradeInt: parseInt(gradeStr)
-            }
-        })
-        const [highestUser] = usersMap.sort((a, b) => b.gradeInt - a.gradeInt)
+        const [submissionUser] = submission.users
 
-        const voteIcon = !isFinal 
-        ? submission.votes?.includes(userEmail) ? heartFilledIcon : heartIcon
-        : submission.finalRoundVotes?.includes(userEmail) ? heartFilledIcon : heartIcon
+        const voteIcon = !isFinal
+            ? submission.votes?.includes(userEmail) ? heartFilledIcon : heartIcon
+            : submission.finalRoundVotes?.includes(userEmail) ? heartFilledIcon : heartIcon
 
-        let division
-        switch (highestUser.gradeInt) {
-            case 0:
-            case 1:
-            case 2:
-                division = 'kids'
-                break;
-
-            case 3:
-            case 4:
-            case 5:
-                division = 'junior'
-                break;
-
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-                division = 'senior'
-                break;
-
-            default:
-                division = 'na'
-        }
-
-        if (filter !== 'all' && filter !== division) return false
+        if (!selectedGrades.includes(submissionUser?.grade)) return false
         if (search !== '') {
             if (
                 !submission.users.some(user => {
@@ -225,8 +237,8 @@ function Gallery(props) {
 
         return (
             <div key={submission.code} className={`col-xl-${!isFinal ? '4' : '6'} col-lg-6 mb-3`}>
-                <div className={`${styles.videoWrapper} ${styles[division]}`}>
-                    <VideoPreview src={submission.video?.url} />
+                <div className={`${styles.fileWrapper}`}>
+                    <FilePreview media={submission.media} />
                 </div>
 
                 <div className={`d-flex align-items-center gap-3 ${styles.voteWrapper}`}>
@@ -238,7 +250,7 @@ function Gallery(props) {
                             <GoogleLogin onSuccess={handleAuthSuccess} onError={handleAuthError} type='icon' shape='pill' />
                     }
 
-                    <div className={`d-flex align-items-center justify-content-center ${styles.voteCount} ${styles[division]}`}>
+                    <div className={`d-flex align-items-center justify-content-center ${styles.voteCount}`}>
                         {(!isFinal ? submission.votes?.length : submission.finalRoundVotes?.length) ?? 0}
                     </div>
 
@@ -257,10 +269,10 @@ function Gallery(props) {
                     </div>
                 </div>
 
-                <div className={`${styles.submissionInfo} ${styles[division]}`}>
-                    <div className={styles.submissionInfoField}>Name: {highestUser.name}</div>
-                    <div className={styles.submissionInfoField}>Division: <span className="text-capitalize">{division}</span></div>
-                    <div className={styles.submissionInfoField}>School: {highestUser.school}</div>
+                <div className={`${styles.submissionInfo}`}>
+                    <div className={styles.submissionInfoField}>Name: {submissionUser.name}</div>
+                    <div className={styles.submissionInfoField}>Division: <span className="text-capitalize">{submissionUser.grade}</span></div>
+                    <div className={styles.submissionInfoField}>School: {submissionUser.school}</div>
                 </div>
             </div>
         )
@@ -269,11 +281,14 @@ function Gallery(props) {
     return (
         <div className="row py-5 mb-5 g-0">
             <div className="d-flex flex-wrap align-items-center justify-content-center gap-2 mb-3">
-                {renderFilters}
+                {renderGroupFilters}
                 <div className={styles.searchWrapper} ref={searchWrapperRef}>
                     <input ref={searchInputRef} type="text" className={`${styles.search} ${searchFocus ? styles.focus : ''}`} value={search} onInput={(e) => setSearch(e.target.value)} />
                     <img role="button" alt="Search" src={!search ? searchIcon : clearIcon} className={styles.searchIcon} onClick={() => setSearch('')} />
                 </div>
+            </div>
+            <div className="d-flex flex-wrap align-items-center justify-content-center gap-2 mb-3">
+                {renderGradeFilters}
             </div>
             {renderSubmissions}
         </div>
