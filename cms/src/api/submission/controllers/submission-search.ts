@@ -17,7 +17,7 @@ export default async (ctx) => {
             });
         }
 
-        const message = submission ? 'Đã tìm thấy mã đăng ký!' : 'Không tìm thấy mã đăng ký!'
+        const message = submission ? 'Submission found!' : 'Submission not found!'
         return ctx.send({
             submission,
             accessToken,

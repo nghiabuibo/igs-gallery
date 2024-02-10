@@ -15,7 +15,6 @@ RUN npm run build --clean
 
 # copy build to nginx
 FROM nginx:1.25.3
-COPY ./nginx/default.conf /etc/nginx/conf.d
-COPY ./ssl /ssl
 WORKDIR /usr/share/nginx/html
+COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build ./

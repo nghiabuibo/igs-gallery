@@ -25,7 +25,7 @@ export default async (ctx) => {
         publishedAt: new Date().toISOString()
       }
     })
-    if (!submission || !submission.id) return ctx.badRequest(`Đăng ký không thành công!`)
+    if (!submission || !submission.id) return ctx.badRequest(`Registration failed!`)
 
     // setup email template
     const emailHtml = fs.readFileSync('public/email/templates/register.html', 'utf-8')
@@ -54,7 +54,7 @@ export default async (ctx) => {
         data: entry
       })
 
-      if (!user || !user.id) return ctx.badRequest(`Đăng ký không thành công tại thành viên ${i + 1}!`)
+      if (!user || !user.id) return ctx.badRequest(`Registration failed at user ${i + 1}!`)
 
       // send email
       if (!registerSettings?.registerEmail) continue
@@ -76,8 +76,8 @@ export default async (ctx) => {
 
     }
 
-    const message = ['Đăng ký thành công!']
-    if (registerSettings?.registerEmail) message.push('Vui lòng kiểm tra email đã đăng ký để nhận mã dự thi.')
+    const message = ['Registration successful!']
+    if (registerSettings?.registerEmail) message.push('Please check your registered email inbox for your submission code.')
 
     return ctx.send({
       code: submissionCode,

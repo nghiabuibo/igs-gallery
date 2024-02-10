@@ -1,3 +1,7 @@
+.searchBtn {
+    background-color: #fff;
+}
+
 .members {
     max-height: 250px;
     overflow: auto;

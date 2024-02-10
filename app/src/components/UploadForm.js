@@ -156,7 +156,7 @@ function UploadForm(props) {
                 <form onSubmit={handleSearch} className="text-center">
                     <p><strong>Enter your code:</strong></p>
                     <input type="text" className={`fs-4 px-3 py-2 text-white text-center mb-3 fw-bold ${stylesRegisterForm.input}`} value={code} onChange={handleCodeInput} required={true} />
-                    <button type="submit" className={`fw-bold py-2 px-4 w-100 ${stylesRegisterForm.wrapper} ${stylesRegisterForm.submitBtn}`}>Search</button>
+                    <button type="submit" className={`fw-bold py-2 px-4 w-100 ${stylesRegisterForm.wrapper} ${styles.searchBtn}`}>Search</button>
                 </form>
             }
 

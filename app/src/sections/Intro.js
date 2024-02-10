@@ -9,7 +9,7 @@ function Intro(props) {
             <div className="col-lg-12">
                 <img src={imgProjectGallery} className={styles.imgProjectGallery} alt="IGS Project Galery" />
             </div>
-            <div className="col-lg-8 offset-lg-2">
+            <div className="col-lg-6 offset-lg-3">
                 <RegisterForm {...props} />
             </div>
         </div>

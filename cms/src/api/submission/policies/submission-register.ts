@@ -12,25 +12,25 @@ export default async (ctx, config, { strapi }) => {
     const startTimestamp = new Date(registerSettings.startTime).getTime()
     const endTimestamp = new Date(registerSettings.endTime).getTime()
 
-    if (currentTimestamp < startTimestamp) throw new ApplicationError('Không thể đăng ký tại thời điểm này!')
-    if (endTimestamp && currentTimestamp > endTimestamp) throw new ApplicationError('Không thể đăng ký tại thời điểm này!')
+    if (currentTimestamp < startTimestamp) throw new ApplicationError('Unable to register at this moment!')
+    if (endTimestamp && currentTimestamp > endTimestamp) throw new ApplicationError('Unable to register at this moment!')
     
     // validate entries
     const entries = ctx.request.body
-    if (!entries.length) throw new ApplicationError('Không có thông tin thành viên!')
+    if (!entries.length) throw new ApplicationError('No user information!')
 
     for (let i in entries) {
         const entry = entries[i]
 
         // check if entry has enough data
-        if (!entry.name || !entry.email || !entry.grade || !entry.class) throw new ApplicationError(`Thành viên ${parseInt(i) + 1} chưa đủ thông tin!`)
+        if (!entry.name || !entry.email || !entry.grade || !entry.class) throw new ApplicationError(`User ${parseInt(i) + 1} is missing information!`)
 
         // validate email
-        if (!isValidEmail(entry.email)) throw new ApplicationError(`Email ${entry.email} không hợp lệ!`)
+        if (!isValidEmail(entry.email)) throw new ApplicationError(`Email ${entry.email} is invalid!`)
 
         // validate grade options
         const userGrades = strapi.plugin('users-permissions').contentType('user').attributes.grade?.enum
-        if (userGrades && userGrades.length && !userGrades.includes(entry.grade)) throw new ApplicationError(`${entry.grade} không hợp lệ!`)
+        if (userGrades && userGrades.length && !userGrades.includes(entry.grade)) throw new ApplicationError(`${entry.grade} is invalid!`)
 
         // check if user with email existed
         const [user] = await strapi.entityService.findMany('plugin::users-permissions.user', {
@@ -40,7 +40,7 @@ export default async (ctx, config, { strapi }) => {
                 email: entry.email
             }
         })
-        if (user) throw new ApplicationError(`Email ${entry.email} đã được đăng ký!`)
+        if (user) throw new ApplicationError(`Email ${entry.email} is already registered!`)
     }
 
     return true;
