@@ -1,13 +1,15 @@
 import RegisterForm from "../components/RegisterForm"
-import imgLeft from "../assets/image/intro-left.png"
+import imgProjectGallery from "../assets/svg/project-gallery.svg"
+
+import styles from './Intro.module.css'
 
 function Intro(props) {
     return (
-        <div className="row mb-5 align-items-center">
-            <div className="col-lg-7">
-                <img src={imgLeft} className="img-fluid user-select-none pe-none" alt="Intro" />
+        <div className="row align-items-center">
+            <div className="col-lg-12">
+                <img src={imgProjectGallery} className={styles.imgProjectGallery} alt="IGS Project Galery" />
             </div>
-            <div className="col-lg-5">
+            <div className="col-lg-8 offset-lg-2">
                 <RegisterForm {...props} />
             </div>
         </div>

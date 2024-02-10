@@ -104,6 +104,9 @@
     },
     "igsStudent": {
       "type": "boolean"
+    },
+    "class": {
+      "type": "string"
     }
   }
 }

@@ -412,6 +412,7 @@ export interface ApiSubmissionSubmission extends Schema.CollectionType {
       'oneToMany',
       'plugin::users-permissions.user'
     >;
+    name: Attribute.String;
     status: Attribute.Enumeration<['pending', 'review', 'active', 'final']>;
     media: Attribute.Media;
     description: Attribute.Text;
@@ -897,6 +898,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       ]
     >;
     igsStudent: Attribute.Boolean;
+    class: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

@@ -1,6 +1,4 @@
 .wrapper {
-    background: rgb(165, 91, 227);
-    background: linear-gradient(135deg, rgba(165, 91, 227, 0.7) 0%, rgba(90, 13, 157, 0.7) 100%);
     border-radius: 0.65rem;
     border: none;
     outline: none;
@@ -12,12 +10,16 @@
 }
 
 .input {
-    background: rgb(194, 112, 241);
-    background: radial-gradient(circle, rgba(194, 112, 241, 0.6) 0%, rgba(180, 74, 240, 0.6) 100%);
+    background: var(--background-color);
     border: none;
     border-radius: 0.65rem;
     outline: none;
     width: 100%;
+    text-align: center;
+}
+
+.input::placeholder {
+    color: #fff;
 }
 
 .register .input {
@@ -25,8 +27,7 @@
 }
 
 .textarea {
-    background: rgb(194, 112, 241);
-    background: radial-gradient(circle, rgba(194, 112, 241, 0.6) 0%, rgba(180, 74, 240, 0.6) 100%);
+    background: var(--background-color);
     border: none;
     border-radius: 0.65rem;
     outline: none;
@@ -56,12 +57,11 @@
 }
 
 .input option {
-    background: rgb(194, 112, 241);
+    background: var(--background-color);
 }
 
 .selected {
-    background: rgb(214, 146, 253);
-    background: radial-gradient(circle, rgba(214, 146, 253, 0.6) 0%, rgba(191, 100, 243, 0.6) 100%);
+    background: var(--background-color);
 }
 
 .entryDelete {
@@ -75,7 +75,43 @@
     background-color: rgb(0 0 0 / 0.2);
 }
 
+.submitArea {
+    padding-top: 10vh;
+    padding-bottom: 5vh;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+.submitAreaText {
+    position: relative;
+    z-index: 10;
+}
+
+.submitAreaBg {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 60vh;
+    height: 100%;
+    object-fit: cover;
+}
+
 .submitBtn {
-    background: #fff;
-    color: #320386;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.continueSvg {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+}
+
+.unlockTheFutureSvg {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
 }

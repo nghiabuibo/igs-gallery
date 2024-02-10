@@ -7,10 +7,11 @@ export default (plugin) => {
 
 	plugin.controllers['content-api'].uploadSubmission = async (ctx) => {
 		// update submission description and status
-		const { description, refId: submissionID } = ctx.request.body
+		const { name, description, refId: submissionID } = ctx.request.body
 		await strapi.entityService.update('api::submission.submission', submissionID, {
 			data: {
 				status: 'review',
+				name,
 				description
 			}
 		})

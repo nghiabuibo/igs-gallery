@@ -1,49 +1,16 @@
 .filterBtn {
-    background: none;
+    background: var(--background-color);
     border: none;
     outline: none;
     min-width: 90px;
-    border: 2px solid #ccc;
     color: #fff;
     border-radius: 1.5rem;
-    padding: 0.3rem 0.75rem;
+    padding: 0.5rem 1rem;
     font-weight: 700;
 }
 
-/* .filterBtn.kids {
-    border: 2px solid #541399;
-}
-
-.filterBtn.junior {
-    border: 2px solid #85E807;
-}
-
-.filterBtn.senior {
-    border: 2px solid #29AAE1;
-} */
-
 .filterBtn.selected {
-    border-color: #fff;
-    background: #fff;
-    color: #541399;
-}
-
-.filterBtn.kids.selected {
-    border-color: #541399;
-    background: #541399;
-    color: #fff;
-}
-
-.filterBtn.junior.selected {
-    border-color: #85E807;
-    background: #85E807;
-    color: #fff;
-}
-
-.filterBtn.senior.selected {
-    border-color: #29AAE1;
-    background: #29AAE1;
-    color: #fff;
+    background: #12b8ff;
 }
 
 .searchWrapper {
@@ -60,12 +27,12 @@
 }
 
 .search {
-    background: none;
+    background: var(--background-color);
     outline: none;
-    border: 2px solid #ccc;
+    border: none;
     color: #fff;
     border-radius: 1.5rem;
-    padding: 0.3rem 2.5rem 0.3rem 0.75rem;
+    padding: 0.5rem 2.5rem 0.5rem 0.75rem;
     width: 150px;
     transition: width ease 0.3s;
 }
@@ -82,52 +49,46 @@
     padding: 10.2%;
 }
 
-.fileWrapper.kids {
-    background-image: url(../assets/image/video-bg-kids.png);
-}
-
-.fileWrapper.junior {
-    background-image: url(../assets/image/video-bg-junior.png);
-}
-
-.fileWrapper.senior {
-    background-image: url(../assets/image/video-bg-senior.png);
-}
-
 .voteWrapper {
     padding: 0 10%;
     margin-top: -5%;
 }
 
+.voteIconWrapper {
+    background-color: rgb(255 255 255 / 0.15);
+    border-radius: 50%;
+    padding: 10px;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.voteIconWrapper.voted {
+    background-color: var(--background-color);
+}
+
 .voteIcon {
-    height: 40px;
+    height: 30px;
 }
 
 .signInText {
     font-size: 0.775rem;
 }
 
+.voteCountIcon {
+    width: 25px;
+    margin-right: 0.5rem;
+}
+
 .voteCount {
-    width: 87px;
-    height: 40px;
-    background-image: url(../assets/svg/vote-count-bg.svg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    padding-left: 5px;
-    font-size: 1.4rem;
+    background-color: #0e678d80;
+    padding: 3px 9px;
+    border-radius: 0.65rem;
+    font-size: 1.2rem;
     font-weight: 500;
-}
-
-.voteCount.kids {
-    background-image: url(../assets/svg/vote-count-bg-kids.svg);
-}
-
-.voteCount.junior {
-    background-image: url(../assets/svg/vote-count-bg-junior.svg);
-}
-
-.voteCount.senior {
-    background-image: url(../assets/svg/vote-count-bg-senior.svg);
 }
 
 .submissionInfo {
@@ -136,25 +97,46 @@
 }
 
 .submissionInfoField {
-    border: 3px solid #ccc;
-    border-radius: 2rem;
+    background-color: var(--background-color);
+    border-radius: 1rem;
     padding: 0.7rem 1rem;
     margin-bottom: 0.5rem;
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.submissionInfo.kids .submissionInfoField {
-    border-color: #541399;
+.submissionDescription {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.9rem;
+    text-align: justify;
 }
 
-.submissionInfo.junior .submissionInfoField {
-    border-color: #85E807;
+.submissionVote {
+    padding: 0 10%;
 }
 
-.submissionInfo.senior .submissionInfoField {
-    border-color: #29AAE1;
+.signOutBtn {
+    position: fixed;
+    right: 3%;
+    bottom: 5%;
+    width: 60px;
+    height: 60px;
+    background-color: var(--background-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 10px;
+    z-index: 20;
+}
+
+.signOutBtnIcon {
+    width: 25px;
 }

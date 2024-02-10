@@ -22,6 +22,9 @@
       "target": "plugin::users-permissions.user",
       "mappedBy": "submission"
     },
+    "name": {
+      "type": "string"
+    },
     "status": {
       "type": "enumeration",
       "enum": [

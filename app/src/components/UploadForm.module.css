@@ -38,8 +38,8 @@
 }
 
 .fileLabel {
-    background-color: #9AFF24;
-    color: #320386;
+    background-color: var(--background-color);
+    color: #fff;
     border-radius: 0.65rem;
     white-space: pre;
     display: inline-flex;
@@ -64,7 +64,7 @@
     outline: none;
     width: var(--size);
     height: var(--size);
-    background-color: #9AFF24;
+    background-color: var(--background-color);
     padding: 20px;
 }
 

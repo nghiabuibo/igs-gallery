@@ -1,3 +1,12 @@
+* {
+    --background-color: rgb(83 155 251 / 0.8);
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
 #root {
     background-image: url(./assets/image/bg.jpg);
     background-size: cover;

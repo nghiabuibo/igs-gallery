@@ -80,7 +80,7 @@ export default async (ctx) => {
     if (registerSettings?.registerEmail) message.push('Vui lòng kiểm tra email đã đăng ký để nhận mã dự thi.')
 
     return ctx.send({
-      // code: submissionCode,
+      code: submissionCode,
       message: message.join(' ')
     })
   } catch (err) {

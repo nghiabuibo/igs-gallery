@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import handleRequestError from "../utils/HandleRequestError"
 
 import stylesRegisterForm from "./RegisterForm.module.css"
-import stylesUpload from "../pages/Upload.module.css"
 import styles from "./UploadForm.module.css"
 
 import uploadSelectIcon from "../assets/svg/upload-select-icon.svg"
@@ -33,11 +32,12 @@ function Progress(props) {
 
 function UploadForm(props) {
     const { code: codeParam } = useParams()
-    const { setIsUploadSucceeded, setIsFee } = props
+    const { setIsUploadSucceeded } = props
     const [code, setCode] = useState(codeParam ?? '')
     const [submission, setSubmission] = useState({})
     const [token, setToken] = useState('')
     const [file, setFile] = useState(null)
+    const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [progress, setProgress] = useState(0)
     const allowFileTypes = [
@@ -56,10 +56,6 @@ function UploadForm(props) {
         'application/vnd.openxmlformats-officedocument.presentationml.template',
         'application/vnd.openxmlformats-officedocument.presentationml.slideshow'
     ]
-
-    const handleChange = (e) => {
-        setDescription(e.target.value)
-    }
 
     const handleCodeInput = (e) => {
         setCode(e.target.value)
@@ -81,22 +77,14 @@ function UploadForm(props) {
 
         setSubmission(res.data.submission ?? {})
         setToken(res.data.accessToken ?? '')
-
-        res.data.submission?.users?.every(user => {
-            if (!user.igsStudent) {
-                setIsFee(true)
-                return false
-            }
-            return true
-        });
     }
 
     const membersRender = submission?.users?.map((member, index) => {
         return (
             <div key={index} className="text-center my-3">
                 <div><strong>{member.name}</strong></div>
-                <div>Trường: {member.school}</div>
-                <div>{member.grade}</div>
+                <div>{member.email}</div>
+                <div>{member.grade} - {member.class}</div>
             </div>
         )
     })
@@ -138,6 +126,7 @@ function UploadForm(props) {
         const apiUrl = process.env.REACT_APP_API_URL + endpoint
         const formData = new FormData()
         formData.append('description', description)
+        formData.append('name', name)
         formData.append('ref', 'api::submission.submission')
         formData.append('refId', submission.id)
         formData.append('field', 'media')
@@ -181,10 +170,11 @@ function UploadForm(props) {
             {
                 (token && submission.id && !submission.media && progress <= 0) &&
                 <form onSubmit={handleSubmit} className="text-center">
-                    <div><strong><span className={stylesUpload.green}>Short description</span> of your performance</strong></div>
-                    <div className="mb-3">(At least 10 words)</div>
-                    <textarea className={`px-3 py-2 text-white ${stylesRegisterForm.textarea}`} rows={6} value={description} required={true} onChange={handleChange}></textarea>
-                    <p className="px-3 mt-5 mb-3"><strong>Please upload your performance</strong></p>
+                    <div className="mb-3"><strong>Name of your project</strong></div>
+                    <input className={`px-3 py-2 mb-3 text-white ${stylesRegisterForm.input}`} value={name} required={true} onChange={(e) => setName(e.target.value)} />
+                    <div className="mb-3"><strong>Description</strong></div>
+                    <textarea className={`px-3 py-2 text-white ${stylesRegisterForm.textarea}`} rows={6} value={description} required={true} onChange={(e) => setDescription(e.target.value)}></textarea>
+                    <p className="px-3 mt-5 mb-3"><strong>Please upload your project</strong></p>
                     <div className="text-center mb-3">
                         <label htmlFor="upload_file_input" className={`fw-bold px-5 py-3 ${styles.fileLabel}`}>
                             <span>Upload</span>
@@ -212,7 +202,7 @@ function UploadForm(props) {
             {
                 (token && submission.id && submission.media) &&
                 <div className="text-center">
-                    <div className="mb-3"><strong>You have already uploaded your performance</strong></div>
+                    <div className="mb-3"><strong>You have already uploaded your project</strong></div>
                     <FilePreview media={submission.media} />
                 </div>
             }

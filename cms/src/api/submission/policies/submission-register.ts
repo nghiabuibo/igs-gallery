@@ -23,7 +23,7 @@ export default async (ctx, config, { strapi }) => {
         const entry = entries[i]
 
         // check if entry has enough data
-        if (!entry.name || !entry.phone || !entry.email || !entry.address || !entry.birthday || !entry.school || !entry.grade) throw new ApplicationError(`Thành viên ${parseInt(i) + 1} chưa đủ thông tin!`)
+        if (!entry.name || !entry.email || !entry.grade || !entry.class) throw new ApplicationError(`Thành viên ${parseInt(i) + 1} chưa đủ thông tin!`)
 
         // validate email
         if (!isValidEmail(entry.email)) throw new ApplicationError(`Email ${entry.email} không hợp lệ!`)

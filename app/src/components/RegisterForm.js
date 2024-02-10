@@ -2,19 +2,25 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import handleRequestError from "../utils/HandleRequestError"
 
-import EntryModel from "../utils/EntryModel"
-
 import styles from "./RegisterForm.module.css"
+
+import continueSvg from "../assets/svg/continue.svg"
+import unlockTheFutureSvg from "../assets/svg/unlock-the-future.svg"
 
 function Input(props) {
     const { type, name, label, value, required, onChange } = props
     return (
         <div className={`row mb-2 align-items-center ${styles.wrapper}`}>
-            <div className={`col-6`}>
-                <div className={`p-1 overflow-hidden text-truncate ${styles.label}`}>{label}</div>
-            </div>
-            <div className={`col-6 g-0`}>
-                <input type={type} name={name} value={value} required={required} onChange={onChange} className={`px-3 py-2 text-white ${styles.input}`} />
+            <div className={`col-12`}>
+                <input
+                    type={type}
+                    name={name}
+                    value={value}
+                    required={required}
+                    onChange={onChange}
+                    className={`px-3 py-2 text-white ${styles.input}`}
+                    placeholder={label}
+                />
             </div>
         </div>
     )
@@ -29,39 +35,12 @@ function Select(props) {
     })
     return (
         <div className={`row mb-2 align-items-center ${styles.wrapper}`}>
-            <div className={`col-6`}>
-                <div className={`p-1 overflow-hidden text-nowrap text-truncate ${styles.label}`}>{label}</div>
-            </div>
-            <div className={`col-6 g-0`}>
+            <div className={`col-12`}>
                 <select name={name} value={value} required={required} onChange={onChange} className={`px-3 py-2 text-white ${styles.input}`}>
-                    <option value=""></option>
+                    <option value="">{label}</option>
                     {renderGradeOptions}
                 </select>
             </div>
-
-        </div>
-
-    )
-}
-
-function CheckButton(props) {
-    const { name, checked, optionLabel, optionValue, onChange } = props
-    return (
-        <button type="button" className={`w-100 px-3 py-2 flex-shrink-1 text-white ${styles.wrapper} ${checked === optionValue ? styles.selected : ''}`} name={name} checked={optionValue} onClick={onChange}>{optionLabel}</button>
-    )
-}
-
-function CheckboxSelect(props) {
-    const { label, options } = props
-    const renderOption = options.map((option, index) => {
-        return (
-            <CheckButton {...props} key={index} optionLabel={option.optionLabel} optionValue={option.optionValue} />
-        )
-    })
-    return (
-        <div className="row flex-nowrap gap-2 mb-2">
-            <div className={`px-3 py-2 flex-shrink-1 ${styles.wrapper} ${styles.label}`}>{label}</div>
-            {renderOption}
         </div>
     )
 }
@@ -77,25 +56,6 @@ function RegisterForm(props) {
         const value = e.target.value
         const dataUpdated = { ...data }
         dataUpdated.entries[dataUpdated.currentEntryIndex][name] = value
-        setData(dataUpdated)
-    }
-
-    const handleCheckboxChange = (e) => {
-        const name = e.target.name
-        const value = e.target.checked
-        const dataUpdated = { ...data }
-        dataUpdated.entries[dataUpdated.currentEntryIndex][name] = value
-        setData(dataUpdated)
-    }
-
-    const handleEntryAdd = () => {
-        const maxEntry = 9
-        if (data.entries.length >= maxEntry) return
-
-        const entryModel = new EntryModel()
-        const dataUpdated = { ...data }
-        dataUpdated.entries.push(entryModel)
-        dataUpdated.currentEntryIndex = dataUpdated.entries.length - 1
         setData(dataUpdated)
     }
 
@@ -150,37 +110,29 @@ function RegisterForm(props) {
                 </div>
             }
             <form onSubmit={handleSubmit} className={styles.register}>
-                <Input type="text" name="name" label="Họ và tên học sinh:" value={currentEntry.name} required={true} onChange={handleInputChange} />
-                <Input type="tel" name="phone" label="SĐT liên hệ:" value={currentEntry.phone} required={true} onChange={handleInputChange} />
-                <Input type="email" name="email" label="Email:" value={currentEntry.email} required={true} onChange={handleInputChange} />
-                <Input type="text" name="address" label="Địa chỉ liên hệ:" value={currentEntry.address} required={true} onChange={handleInputChange} />
-                <Input type="date" name="birthday" label="Năm sinh:" value={currentEntry.birthday} required={true} onChange={handleInputChange} />
-                <Input type="text" name="school" label="Trường:" value={currentEntry.school} required={true} onChange={handleInputChange} />
-                <Select name="grade" label="Khối lớp:" value={currentEntry.grade} options={grades} required={true} onChange={handleInputChange} />
-                <CheckboxSelect
-                    name="igsStudent"
-                    label="Học sinh IGS:"
-                    checked={currentEntry.igsStudent}
-                    onChange={handleCheckboxChange}
-                    options={[
-                        {
-                            optionLabel: 'Có',
-                            optionValue: true
-                        },
-                        {
-                            optionLabel: 'Không',
-                            optionValue: false
-                        }
-                    ]}
-                />
-                <div className="row mb-4">
-                    <button type="button" className={`px-3 py-2 text-white ${styles.addEntry} ${styles.wrapper}`} onClick={handleEntryAdd}>{data.entries?.length > 1 ? 'Thêm thành viên' : 'Đăng ký nhóm'}</button>
+                <Input type="text" name="name" label="Full name" value={currentEntry.name} required={true} onChange={handleInputChange} />
+                <Input type="email" name="email" label="Email address" value={currentEntry.email} required={true} onChange={handleInputChange} />
+                <div className="row g-2">
+                    <div className="col-lg-7">
+                        <Select name="grade" label="Grade" value={currentEntry.grade} options={grades} required={true} onChange={handleInputChange} />
+                    </div>
+                    <div className="col-lg-5 mt-0 mt-lg-2">
+                        <Input type="text" name="class" label="Class" value={currentEntry.class} required={true} onChange={handleInputChange} />
+                    </div>
                 </div>
-                <div className="text-center mb-2">
-                    <button className={`fs-4 fw-bold py-2 px-5 ${styles.wrapper} ${styles.submitBtn}`} type="submit">ĐĂNG KÝ NGAY</button>
-                </div>
-                <div className="text-center">
-                    <a href={`/upload`} className="text-white">Bạn đã đăng ký? Nộp bài thi tại đây.</a>
+
+                <div className={styles.submitArea}>
+                    <div className={styles.submitAreaText}>
+                        <button className={`${styles.submitBtn}`} type="submit">
+                            <img src={continueSvg} className={styles.continueSvg} alt="Continue" />
+                        </button>
+                        <img src={unlockTheFutureSvg} className={styles.unlockTheFutureSvg} alt="Unlock The Future" />
+                        <em>
+                            <strong>* Registration deadline:</strong>
+                            <br />
+                            At 11:59 PM on 7th February, 2024
+                        </em>
+                    </div>
                 </div>
             </form>
         </>

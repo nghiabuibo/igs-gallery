@@ -220,9 +220,11 @@ function Gallery(props) {
 
         const [submissionUser] = submission.users
 
-        const voteIcon = !isFinal
-            ? submission.votes?.includes(userEmail) ? heartFilledIcon : heartIcon
-            : submission.finalRoundVotes?.includes(userEmail) ? heartFilledIcon : heartIcon
+        const isVoted = !isFinal
+            ? submission.votes?.includes(userEmail) ? true : false
+            : submission.finalRoundVotes?.includes(userEmail) ? true : false
+
+        const voteIcon = isVoted ? heartFilledIcon : heartIcon
 
         if (!selectedGrades.includes(submissionUser?.grade)) return false
         if (search !== '') {
@@ -236,21 +238,14 @@ function Gallery(props) {
         }
 
         return (
-            <div key={submission.code} className={`col-xl-${!isFinal ? '4' : '6'} col-lg-6 mb-3`}>
+            <div key={submission.code} className={`col-lg-6 mb-3`}>
                 <div className={`${styles.fileWrapper}`}>
                     <FilePreview media={submission.media} />
                 </div>
 
                 <div className={`d-flex align-items-center gap-3 ${styles.voteWrapper}`}>
-                    {
-                        userEmail
-                            ?
-                            <img src={voteIcon} role="button" className={styles.voteIcon} alt="Vote" onClick={() => handleVote(submission.code)} />
-                            :
-                            <GoogleLogin onSuccess={handleAuthSuccess} onError={handleAuthError} type='icon' shape='pill' />
-                    }
-
                     <div className={`d-flex align-items-center justify-content-center ${styles.voteCount}`}>
+                        <img src={heartFilledIcon} className={styles.voteCountIcon} alt="Vote Count" />
                         {(!isFinal ? submission.votes?.length : submission.finalRoundVotes?.length) ?? 0}
                     </div>
 
@@ -258,40 +253,55 @@ function Gallery(props) {
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="#fff" height="25"><path d="M591.5 256c50-50 50-131 0-181s-131-50-181 0L387.9 97.6c-6.2 6.2-6.2 16.4 0 22.6s16.4 6.2 22.6 0l22.6-22.6c37.5-37.5 98.3-37.5 135.8 0s37.5 98.3 0 135.8L444.3 357.9c-37.4 37.4-98.1 37.4-135.6 0c-35.6-35.6-37.6-92.6-4.7-130.6l5.3-6.1c5.8-6.7 5.1-16.8-1.6-22.6s-16.8-5.1-22.6 1.6l-5.3 6.1c-43.9 50.7-41.2 126.7 6.2 174.1c49.9 49.9 130.9 49.9 180.8 0L591.5 256zM48.5 256c-50 50-50 131 0 181s131 50 181 0l22.6-22.6c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0l-22.6 22.6c-37.5 37.5-98.3 37.5-135.8 0s-37.5-98.3 0-135.8L195.7 154.1c37.4-37.4 98.1-37.4 135.6 0c35.6 35.6 37.6 92.6 4.7 130.6l-5.3 6.1c-5.8 6.7-5.1 16.8 1.6 22.6s16.8 5.1 22.6-1.6l5.3-6.1c43.9-50.7 41.2-126.7-6.2-174.1C303.9 81.5 223 81.5 173 131.4L48.5 256z" /></svg>
                     </div>
 
-                    <div className={`ms-auto text-end`}>
-                        {
-                            userEmail
-                                ?
-                                <img src={signOutIcon} role="button" alt="Sign out" className={`${styles.voteIcon}`} onClick={handleSignOut} />
-                                :
-                                <small className={styles.signInText}>Sign in to vote</small>
-                        }
-                    </div>
+                    <div className={`ms-auto text-end fw-bold`}>{submission.name}</div>
                 </div>
 
                 <div className={`${styles.submissionInfo}`}>
-                    <div className={styles.submissionInfoField}>Name: {submissionUser.name}</div>
-                    <div className={styles.submissionInfoField}>Division: <span className="text-capitalize">{submissionUser.grade}</span></div>
-                    <div className={styles.submissionInfoField}>School: {submissionUser.school}</div>
+                    <div className={styles.submissionInfoField}>{submissionUser.name}{submissionUser.class && ` - ${submissionUser.class}`}</div>
+                    <div className={styles.submissionDescription}><strong>Description:</strong> {submission.description}</div>
+                </div>
+
+                <div className={`${styles.submissionVote}`}>
+                    {
+                        userEmail
+                            ?
+                            <div role="button" className={`${styles.voteIconWrapper} ${isVoted ? styles.voted : ''}`} onClick={() => handleVote(submission.code)}>
+                                <img src={voteIcon} className={styles.voteIcon} alt="Vote" />
+                            </div>
+                            :
+                            <div className="d-flex align-items-center justify-content-center gap-3">
+                                <GoogleLogin onSuccess={handleAuthSuccess} onError={handleAuthError} type='icon' shape='pill' />
+                                <small className={styles.signInText}>Sign in to vote</small>
+                            </div>
+                    }
                 </div>
             </div>
         )
     })
 
     return (
-        <div className="row py-5 mb-5 g-0">
-            <div className="d-flex flex-wrap align-items-center justify-content-center gap-2 mb-3">
-                {renderGroupFilters}
-                <div className={styles.searchWrapper} ref={searchWrapperRef}>
-                    <input ref={searchInputRef} type="text" className={`${styles.search} ${searchFocus ? styles.focus : ''}`} value={search} onInput={(e) => setSearch(e.target.value)} />
-                    <img role="button" alt="Search" src={!search ? searchIcon : clearIcon} className={styles.searchIcon} onClick={() => setSearch('')} />
+        <>
+            <div className="row py-5 g-0">
+                <div className="d-flex flex-wrap align-items-center justify-content-center gap-2 mb-3">
+                    {renderGroupFilters}
+                    <div className={styles.searchWrapper} ref={searchWrapperRef}>
+                        <input ref={searchInputRef} type="text" className={`${styles.search} ${searchFocus ? styles.focus : ''}`} value={search} onInput={(e) => setSearch(e.target.value)} />
+                        <img role="button" alt="Search" src={!search ? searchIcon : clearIcon} className={styles.searchIcon} onClick={() => setSearch('')} />
+                    </div>
                 </div>
+                <div className="d-flex flex-wrap align-items-center justify-content-center gap-2 mb-3">
+                    {renderGradeFilters}
+                </div>
+                {renderSubmissions}
             </div>
-            <div className="d-flex flex-wrap align-items-center justify-content-center gap-2 mb-3">
-                {renderGradeFilters}
-            </div>
-            {renderSubmissions}
-        </div>
+
+            {
+                userEmail &&
+                <div role="button" className={styles.signOutBtn} onClick={handleSignOut}>
+                    <img src={signOutIcon} alt="Sign out" className={`${styles.signOutBtnIcon}`} />
+                </div>
+            }
+        </>
     )
 }
 
