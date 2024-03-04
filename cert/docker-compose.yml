@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  webserver:
+    build: .
+    container_name: webserver
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+      - /var/www/html/api/vendor

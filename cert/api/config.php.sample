@@ -1,0 +1,7 @@
+<?php
+
+define('GG_API_KEY', '');
+define('GG_API_URL', 'https://sheets.googleapis.com/v4/spreadsheets/');
+define('GG_SPREADSHEET_ID', '');
+define('GG_SHEET_NAME', '');
+define('GG_SHEET_RANGE', '');

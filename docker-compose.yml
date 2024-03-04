@@ -17,6 +17,16 @@ services:
     ports:
       - 1337:1337
     restart: always
+  cert:
+    build:
+      context: ./cert
+      dockerfile: ./Dockerfile
+    ports:
+      - 8081:80
+    volumes:
+      - ./cert:/var/www/html
+      - /var/www/html/api/vendor
+    restart: always
   database:
     image: mysql:8.0.35
     command: --default-authentication-plugin=mysql_native_password
