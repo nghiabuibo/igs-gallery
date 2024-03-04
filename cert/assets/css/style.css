@@ -18,6 +18,7 @@ body {
 	display: flex;
 	align-items: center;
 	overflow-x: hidden;
+	padding: 10px;
 }
 .logo {
 	max-width: 100%;
