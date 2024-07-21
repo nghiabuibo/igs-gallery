@@ -34,7 +34,7 @@ function Vote(props) {
     return (
         <div className={`container ${stylesHome.home}`}>
             <Logo igLogo={true} />
-            <Intro />
+            {/* <Intro /> */}
             <Gallery isFinal={isFinal} />
         </div>
     )

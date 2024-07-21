@@ -1,6 +1,6 @@
 import axios from 'axios'
 import handleRequestError from '../utils/HandleRequestError';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Logo from '../sections/Logo';
 import Intro from '../sections/Intro';
 
@@ -13,6 +13,10 @@ function Home() {
         entries: [new EntryModel()],
         currentEntryIndex: 0
     })
+
+    useEffect(() => {
+        window.location.href = `${process.env.REACT_APP_APP_URL}/vote`
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
